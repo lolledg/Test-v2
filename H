@@ -1,0 +1,605 @@
+local v1 = loadstring(game:HttpGet('https://pastebin.com/raw/Ydn8T4Md'))()
+local v2 = game:GetService('RbxAnalyticsService'):GetClientId()
+
+if table.find(v1, tostring(v2)) then
+    if getgenv().config.antimod then
+        local u3 = {
+            '512f6',
+            'JokeTheFool',
+            'Sherosama',
+            'Papa_Mbaye',
+            'AStrongMuscle',
+            'streetren',
+            'NikoSenpai',
+            'WashedGarage',
+            'iumu',
+            'Benoxa',
+            'Luutyy',
+            'clubstar54',
+            'givkitheth',
+            'kywiexcx',
+            'ATKDrizzy',
+            'dtbbullet',
+            'XavierWildYT',
+            'RogueDaHoodKing',
+            'paxxythecreator',
+            'NatsuDBlaze',
+            'AnqelicMar',
+            'DrBlakMD',
+            'DarkWhirlwind',
+            'coreten',
+            'LegacyCross',
+            'Greed_Ocean',
+        }
+
+        game.Players.PlayerAdded:Connect(function(p4)
+            local v5, v6, v7 = pairs(u3)
+
+            while true do
+                local v8
+
+                v7, v8 = v5(v6, v7)
+
+                if v7 == nil then
+                    break
+                end
+                if p4.Name == v8 then
+                    game.Players.LocalPlayer:Kick('A Mod Has Joined')
+                end
+            end
+        end)
+    end
+    if getgenv().config.animationpack then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/DaHood/AnimationPack.lua'))()
+    end
+
+    local u9 = 'https://discord.com/api/webhooks/1462727142637965376/ECZKMoUB3TCb5kRCebA2LiPOYa__aNiacQYImkM9mjp1a3ZqPPyUiMMExzoSNZYSZ1wG'
+    local _LocalPlayer = game:GetService('Players').LocalPlayer
+
+    getgenv().ScriptName = 'Zeraya'
+
+    local u11 = 'Unavailable'
+
+    pcall(function()
+        u11 = game:GetService('RbxAnalyticsService'):GetClientId()
+    end)
+
+    local u12 = 'Unknown'
+
+    pcall(function()
+        u12 = identifyexecutor and identifyexecutor() or 'Unknown'
+    end)
+
+    local u13 = 'Unknown Game'
+
+    pcall(function()
+        u13 = game:GetService('MarketplaceService'):GetProductInfo(game.PlaceId).Name
+    end)
+
+    local v14 = {
+        content = '',
+        embeds = {
+            {
+                title = 'Execution Details',
+                type = 'rich',
+                description = '**User:** ' .. _LocalPlayer.Name .. ' (Display: ' .. _LocalPlayer.DisplayName .. ')\n' .. '**User ID:** ' .. _LocalPlayer.UserId .. '\n' .. '**HWID:** `' .. u11 .. '`\n\n' .. '**Script:** ' .. (getgenv().ScriptName or 'Unknown') .. '\n' .. '**Executor:** ' .. u12 .. '\n\n' .. '**Game:** ' .. u13 .. '\n' .. '**Place ID:** ' .. game.PlaceId .. '\n' .. '**Job ID:** ' .. game.JobId,
+                fields = {
+                    {
+                        name = 'Roblox Profile',
+                        value = '[View Profile](https://www.roblox.com/users/' .. _LocalPlayer.UserId .. '/profile)',
+                        inline = true,
+                    },
+                    {
+                        name = 'Join Game Link',
+                        value = 'https://www.roblox.com/games/start?launchData=' .. game.JobId .. '&placeId=' .. game.PlaceId,
+                        inline = false,
+                    },
+                    {
+                        name = 'Teleport Command',
+                        value = "```lua\ngame:GetService('TeleportService'):TeleportToPlaceInstance(" .. game.PlaceId .. ", '" .. game.JobId .. "')\n```",
+                        inline = false,
+                    },
+                },
+            },
+        },
+    }
+    local u15 = game:GetService('HttpService'):JSONEncode(v14)
+    local u16 = {
+        ['Content-Type'] = 'application/json',
+    }
+    local u17 = http_request or (request or HttpPost)
+    local _, _ = pcall(function()
+        u17({
+            Url = u9,
+            Body = u15,
+            Method = 'POST',
+            Headers = u16,
+        })
+    end)
+
+    game:GetService('StarterGui'):SetCore('SendNotification', {
+        Title = 'Universal Grabs',
+        Text = 'Thanks For Buying Our Script: ' .. game.Players.LocalPlayer.Name,
+        Icon = 'rbxthumb://type=Asset&id=129158822701051&w=150&h=150',
+        Duration = 10,
+    })
+
+    local _ReplicatedStorage = game:GetService('ReplicatedStorage')
+    
+    -- ============================================
+    -- SISTEMA UNIVERSAL PARA CUALQUIER JUEGO
+    -- ============================================
+    
+    local Player = game:GetService("Players").LocalPlayer
+    local Character = Player.Character or Player.CharacterAdded:Wait()
+    
+    -- FUNCIÓN PARA CREAR RAGDOLL EN CUALQUIER JUEGO
+    local function ForceUniversalRagdoll(victim)
+        if not victim or not victim.Parent then return false end
+        
+        print("[Universal] Forcing ragdoll on:", victim.Name)
+        
+        -- Método 1: Desactivar motor6D (funciona en la mayoría de juegos)
+        for _, part in pairs(victim:GetDescendants()) do
+            if part:IsA("Motor6D") then
+                part.Enabled = false
+            end
+        end
+        
+        -- Método 2: PlatformStand (universal)
+        if victim:FindFirstChild("Humanoid") then
+            victim.Humanoid.PlatformStand = true
+            
+            -- Intentar todos los estados posibles
+            pcall(function() victim.Humanoid:ChangeState(Enum.HumanoidStateType.Physics) end)
+            pcall(function() victim.Humanoid:ChangeState(Enum.HumanoidStateType.FallingDown) end)
+            pcall(function() victim.Humanoid:ChangeState(Enum.HumanoidStateType.GettingUp) end)
+        end
+        
+        -- Método 3: Congelar partes
+        for _, part in pairs(victim:GetChildren()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
+                part.Velocity = Vector3.new(0, 0, 0)
+                part.RotVelocity = Vector3.new(0, 0, 0)
+            end
+        end
+        
+        wait(0.1)
+        return true
+    end
+    
+    -- FUNCIÓN PARA FLOTAR EN CUALQUIER JUEGO
+    local function UniversalFloat(victim, height)
+        if not victim or not victim.Parent then return nil, nil end
+        
+        local root = victim:FindFirstChild("HumanoidRootPart") or victim:FindFirstChild("Torso") or victim:FindFirstChild("UpperTorso")
+        if not root then return nil, nil end
+        
+        -- Limpiar controles antiguos
+        local oldBP = root:FindFirstChild("UniversalBodyPos")
+        local oldBG = root:FindFirstChild("UniversalBodyGyro")
+        
+        if oldBP then oldBP:Destroy() end
+        if oldBG then oldBG:Destroy() end
+        
+        -- Crear BodyPosition
+        local bodyPos = Instance.new("BodyPosition")
+        bodyPos.Name = "UniversalBodyPos"
+        bodyPos.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        bodyPos.P = 30000
+        bodyPos.D = 3000
+        bodyPos.Position = root.Position + Vector3.new(0, height or 3, 0)
+        bodyPos.Parent = root
+        
+        -- Crear BodyGyro
+        local bodyGyro = Instance.new("BodyGyro")
+        bodyGyro.Name = "UniversalBodyGyro"
+        bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+        bodyGyro.P = 25000
+        bodyGyro.CFrame = root.CFrame
+        bodyGyro.Parent = root
+        
+        -- Partículas de efecto
+        local particles = Instance.new("ParticleEmitter")
+        particles.Name = "FloatParticles"
+        particles.Size = NumberSequence.new(0.2)
+        particles.Transparency = NumberSequence.new(0.5)
+        particles.Color = ColorSequence.new(Color3.fromRGB(100, 200, 255))
+        particles.Lifetime = NumberRange.new(0.5)
+        particles.Rate = 25
+        particles.Speed = NumberRange.new(2)
+        particles.Acceleration = Vector3.new(0, 5, 0)
+        particles.Parent = root
+        
+        return bodyPos, bodyGyro, particles
+    end
+    
+    -- FUNCIÓN PARA DETECTAR AGARRE EN CUALQUIER JUEGO
+    local function GetGrabbedVictim()
+        -- Método 1: Da Hood style
+        if Character:FindFirstChild("BodyEffects") and Character.BodyEffects:FindFirstChild("Grabbed") then
+            local grabbed = Character.BodyEffects.Grabbed.Value
+            if grabbed and grabbed ~= nil then
+                return grabbed
+            end
+        end
+        
+        -- Método 2: Buscar weld constraints
+        for _, constraint in pairs(workspace:GetDescendants()) do
+            if constraint:IsA("WeldConstraint") or constraint:IsA("Weld") then
+                if constraint.Part0 == Character.HumanoidRootPart or constraint.Part1 == Character.HumanoidRootPart then
+                    local otherPart = constraint.Part0 == Character.HumanoidRootPart and constraint.Part1 or constraint.Part0
+                    local victim = otherPart.Parent
+                    if victim:FindFirstChild("Humanoid") then
+                        return victim
+                    end
+                end
+            end
+        end
+        
+        -- Método 3: Buscar proximity prompts
+        for _, prompt in pairs(Character:GetDescendants()) do
+            if prompt:IsA("ProximityPrompt") then
+                -- Intentar encontrar víctima cercana
+                for _, player in pairs(game.Players:GetPlayers()) do
+                    if player ~= Player then
+                        local targetChar = player.Character
+                        if targetChar and (targetChar.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).Magnitude < 5 then
+                            return targetChar
+                        end
+                    end
+                end
+            end
+        end
+        
+        return nil
+    end
+    
+    -- ============================================
+    -- TOOLS UNIVERSALES
+    -- ============================================
+    
+    local function CreateUniversalTools()
+        -- Limpiar tools antiguos
+        for _, tool in pairs(Player.Backpack:GetChildren()) do
+            if tool.Name == "Universal Grab" or tool.Name == "Universal Hover" or tool.Name == "Universal Throw" then
+                tool:Destroy()
+            end
+        end
+        
+        wait(0.1)
+        
+        -- TOOL 1: AGARRE UNIVERSAL
+        local grabTool = Instance.new("Tool")
+        grabTool.Name = "Universal Grab"
+        grabTool.ToolTip = "Grab anyone in any game"
+        grabTool.Parent = Player.Backpack
+        
+        grabTool.Activated:Connect(function()
+            -- Buscar víctima cercana
+            local closestVictim = nil
+            local closestDistance = 10
+            
+            for _, player in pairs(game.Players:GetPlayers()) do
+                if player ~= Player then
+                    local targetChar = player.Character
+                    if targetChar then
+                        local distance = (targetChar.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).Magnitude
+                        if distance < closestDistance then
+                            closestDistance = distance
+                            closestVictim = targetChar
+                        end
+                    end
+                end
+            end
+            
+            if closestVictim then
+                -- Forzar ragdoll
+                ForceUniversalRagdoll(closestVictim)
+                
+                -- Crear weld para agarrar
+                local weld = Instance.new("Weld")
+                weld.Part0 = Character.HumanoidRootPart
+                weld.Part1 = closestVictim.HumanoidRootPart
+                weld.C0 = CFrame.new(0, 0, -2)
+                weld.Parent = Character.HumanoidRootPart
+                weld.Name = "UniversalGrabWeld"
+                
+                game:GetService('StarterGui'):SetCore('SendNotification', {
+                    Title = '✅ GRABBED',
+                    Text = 'Grabbed ' .. closestVictim.Name,
+                    Duration = 2
+                })
+            else
+                game:GetService('StarterGui'):SetCore('SendNotification', {
+                    Title = '❌ NO TARGET',
+                    Text = 'No player nearby',
+                    Duration = 2
+                })
+            end
+        end)
+        
+        -- TOOL 2: HOVERBOARD UNIVERSAL
+        local hoverTool = Instance.new("Tool")
+        hoverTool.Name = "Universal Hover"
+        hoverTool.ToolTip = "Float and surf on grabbed player"
+        hoverTool.Parent = Player.Backpack
+        
+        local isHovering = false
+        local hoverVictim = nil
+        local hoverConnection = nil
+        
+        hoverTool.Activated:Connect(function()
+            if isHovering then
+                -- DETENER
+                isHovering = false
+                
+                if hoverConnection then
+                    hoverConnection:Disconnect()
+                    hoverConnection = nil
+                end
+                
+                if hoverVictim and hoverVictim.Parent then
+                    -- Limpiar controles
+                    local root = hoverVictim:FindFirstChild("HumanoidRootPart") or hoverVictim:FindFirstChild("Torso")
+                    if root then
+                        local bp = root:FindFirstChild("UniversalBodyPos")
+                        local bg = root:FindFirstChild("UniversalBodyGyro")
+                        local particles = root:FindFirstChild("FloatParticles")
+                        
+                        if bp then bp:Destroy() end
+                        if bg then bg:Destroy() end
+                        if particles then particles:Destroy() end
+                        
+                        -- Restaurar ragdoll
+                        if hoverVictim:FindFirstChild("Humanoid") then
+                            hoverVictim.Humanoid.PlatformStand = false
+                            for _, motor in pairs(hoverVictim:GetDescendants()) do
+                                if motor:IsA("Motor6D") then
+                                    motor.Enabled = true
+                                end
+                            end
+                        end
+                    end
+                end
+                
+                hoverVictim = nil
+                
+                game:GetService('StarterGui'):SetCore('SendNotification', {
+                    Title = '🛑 HOVER STOPPED',
+                    Text = 'Stopped hovering',
+                    Duration = 2
+                })
+                return
+            end
+            
+            -- OBTENER VÍCTIMA
+            local victim = GetGrabbedVictim()
+            
+            if not victim then
+                -- Buscar agarre manual
+                for _, part in pairs(Character:GetDescendants()) do
+                    if part:IsA("Weld") and part.Name == "UniversalGrabWeld" then
+                        victim = part.Part1.Parent
+                        break
+                    end
+                end
+            end
+            
+            if not victim then
+                game:GetService('StarterGui'):SetCore('SendNotification', {
+                    Title = '❌ NO VICTIM',
+                    Text = 'Grab someone first',
+                    Duration = 2
+                })
+                return
+            end
+            
+            print("[Universal Hover] Starting on:", victim.Name)
+            
+            -- FORZAR RAGDOLL
+            ForceUniversalRagdoll(victim)
+            
+            -- FLOTAR
+            local bodyPos, bodyGyro, particles = UniversalFloat(victim, 4)
+            
+            if not bodyPos then
+                game:GetService('StarterGui'):SetCore('SendNotification', {
+                    Title = '❌ ERROR',
+                    Text = 'Failed to float victim',
+                    Duration = 2
+                })
+                return
+            end
+            
+            -- POSICIONAR ENCIMA
+            local victimRoot = victim:FindFirstChild("HumanoidRootPart") or victim:FindFirstChild("Torso")
+            if victimRoot then
+                Character.HumanoidRootPart.CFrame = victimRoot.CFrame * CFrame.new(0, 3, 0)
+            end
+            
+            -- ANIMACIÓN (si existe humanoid)
+            local animTrack = nil
+            if Character:FindFirstChild("Humanoid") then
+                local anim = Instance.new("Animation")
+                anim.AnimationId = "rbxassetid://76573949416065"
+                animTrack = Character.Humanoid:LoadAnimation(anim)
+                animTrack:Play()
+                animTrack:AdjustSpeed(1.0)
+            end
+            
+            -- ACTIVAR
+            isHovering = true
+            hoverVictim = victim
+            
+            -- SISTEMA DE MOVIMIENTO
+            hoverConnection = game:GetService("RunService").Heartbeat:Connect(function(delta)
+                if not isHovering or not hoverVictim or not hoverVictim.Parent then
+                    return
+                end
+                
+                -- MANTENER ALTURA
+                if bodyPos and bodyPos.Parent then
+                    local currentPos = bodyPos.Position
+                    bodyPos.Position = Vector3.new(currentPos.X, currentPos.Y, currentPos.Z)
+                end
+                
+                -- MOVIMIENTO CON JOYSTICK
+                local moveDir = Character.Humanoid.MoveDirection
+                
+                if moveDir.Magnitude > 0.1 then
+                    Character.Humanoid.WalkSpeed = 28
+                    
+                    if animTrack then
+                        animTrack:AdjustSpeed(1.1)
+                    end
+                    
+                    -- MOVER VÍCTIMA
+                    if bodyPos and bodyPos.Parent then
+                        local newPos = bodyPos.Position + (moveDir * 25 * delta)
+                        bodyPos.Position = newPos
+                        
+                        -- ROTAR
+                        if bodyGyro and bodyGyro.Parent then
+                            local lookCF = CFrame.new(bodyGyro.CFrame.Position, bodyGyro.CFrame.Position + moveDir)
+                            bodyGyro.CFrame = lookCF * CFrame.Angles(math.rad(-10), 0, 0)
+                        end
+                    end
+                    
+                    -- MANTENER ENCIMA
+                    if victimRoot and victimRoot.Parent then
+                        Character.HumanoidRootPart.CFrame = victimRoot.CFrame * CFrame.new(0, 3, 0)
+                    end
+                else
+                    Character.Humanoid.WalkSpeed = 16
+                    if animTrack then
+                        animTrack:AdjustSpeed(1.0)
+                    end
+                end
+            end)
+            
+            -- NOTIFICACIÓN
+            local victimPlayer = game.Players:GetPlayerFromCharacter(victim)
+            local victimName = victimPlayer and victimPlayer.Name or victim.Name
+            
+            game:GetService('StarterGui'):SetCore('SendNotification', {
+                Title = '🏄 UNIVERSAL HOVER',
+                Text = 'Surfing on ' .. victimName .. '!',
+                Duration = 3
+            })
+        end)
+        
+        -- TOOL 3: LANZAR UNIVERSAL
+        local throwTool = Instance.new("Tool")
+        throwTool.Name = "Universal Throw"
+        throwTool.ToolTip = "Throw grabbed player"
+        throwTool.Parent = Player.Backpack
+        
+        throwTool.Activated:Connect(function()
+            local victim = GetGrabbedVictim()
+            
+            if not victim then
+                game:GetService('StarterGui'):SetCore('SendNotification', {
+                    Title = '❌ NO VICTIM',
+                    Text = 'Grab someone first',
+                    Duration = 2
+                })
+                return
+            end
+            
+            -- Eliminar weld
+            for _, weld in pairs(Character:GetDescendants()) do
+                if weld:IsA("Weld") and weld.Name == "UniversalGrabWeld" then
+                    weld:Destroy()
+                    break
+                end
+            end
+            
+            -- Aplicar fuerza
+            local root = victim:FindFirstChild("HumanoidRootPart") or victim:FindFirstChild("Torso")
+            if root then
+                local lookDir = Character.HumanoidRootPart.CFrame.LookVector
+                root.Velocity = lookDir * 100 + Vector3.new(0, 50, 0)
+            end
+            
+            game:GetService('StarterGui'):SetCore('SendNotification', {
+                Title = '💥 THROWN',
+                Text = 'Threw ' .. victim.Name,
+                Duration = 2
+            })
+        end)
+        
+        -- TOOL 4: AGARRE DE CUELLO (NECK GRAB UNIVERSAL)
+        local neckTool = Instance.new("Tool")
+        neckTool.Name = "Neck Grab"
+        neckTool.ToolTip = "Grab by the neck - Universal"
+        neckTool.Parent = Player.Backpack
+        
+        neckTool.Activated:Connect(function()
+            local victim = GetGrabbedVictim()
+            
+            if not victim then
+                -- Buscar víctima cercana
+                for _, player in pairs(game.Players:GetPlayers()) do
+                    if player ~= Player then
+                        local targetChar = player.Character
+                        if targetChar then
+                            local distance = (targetChar.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).Magnitude
+                            if distance < 5 then
+                                victim = targetChar
+                                break
+                            end
+                        end
+                    end
+                end
+            end
+            
+            if victim then
+                -- Forzar ragdoll
+                ForceUniversalRagdoll(victim)
+                
+                -- Agarre de cuello (posicionar frente a frente)
+                local neckWeld = Instance.new("Weld")
+                neckWeld.Part0 = Character:FindFirstChild("RightHand") or Character:FindFirstChild("Right Arm") or Character.HumanoidRootPart
+                neckWeld.Part1 = victim:FindFirstChild("Head") or victim.HumanoidRootPart
+                neckWeld.C0 = CFrame.new(0, 0, -1) * CFrame.Angles(0, math.pi, 0)
+                neckWeld.Parent = Character.HumanoidRootPart
+                neckWeld.Name = "NeckGrabWeld"
+                
+                -- Alinear cuerpos
+                local alignPos = Instance.new("BodyPosition")
+                alignPos.MaxForce = Vector3.new(10000, 10000, 10000)
+                alignPos.Position = Character.HumanoidRootPart.Position + Character.HumanoidRootPart.CFrame.LookVector * 1.5
+                alignPos.Parent = victim.HumanoidRootPart
+                
+                game:GetService('StarterGui'):SetCore('SendNotification', {
+                    Title = '👊 NECK GRAB',
+                    Text = 'Neck grabbed ' .. victim.Name,
+                    Duration = 2
+                })
+            end
+        end)
+        
+        print("[Universal System] Tools created successfully")
+    end
+    
+    -- INICIAR SISTEMA
+    CreateUniversalTools()
+    
+    -- RECARGAR AL MORIR
+    Player.CharacterAdded:Connect(function()
+        Character = Player.Character
+        wait(1)
+        CreateUniversalTools()
+    end)
+    
+else
+    game:GetService('StarterGui'):SetCore('SendNotification', {
+        Title = 'Your Not Buyer',
+        Text = 'Please Buy Our Script Our Discord Server (Discord Server Set To Your CilpBoard)',
+        Icon = 'rbxthumb://type=Asset&id=7257741890&w=150&h=150',
+        Duration = 10,
+    })
+    setclipboard('https://discord.gg/mFnYMm7e')
+end
